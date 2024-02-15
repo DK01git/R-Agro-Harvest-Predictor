@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Punctuality: Delay Minutes Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{{ background_image }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 95%;
+            padding: 12px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Flight Punctuality: Delay Minutes Predictor</h1>
+    </header>
+    <div class="container">
+        <form id="prediction-form" action="{{ url_for('predict') }}" method="post">
+            <div class="input-container">
+                <label for="reporting_period">Reporting Period</label>
+                <input type="text" id="reporting_period" name="reporting_period" required>
+            </div>
+
+            <div class="input-container">
+                <label for="number_flights_matched">Matched Flights</label>
+                <input type="text" id="number_flights_matched" name="number_flights_matched" required>
+            </div>
+
+            <div class="input-container">
+                <label for="actual_flights_unmatched">Actual Unmatched Flights</label>
+                <input type="text" id="actual_flights_unmatched" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="number_flights_cancelled">Cancelled Flights</label>
+                <input type="text" id="number_flights_cancelled" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_more_than_15_minutes_early_percent">More than 15 minutes</label>
+                <input type="text" id="flights_more_than_15_minutes_early_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_15_minutes_early_to_1_minute_early_percent">1 to 15 minutes Early</label>
+                <input type="text" id="flights_15_minutes_early_to_1_minute_early_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_0_to_15_minutes_late_percent">0 to 15 minutes late</label>
+                <input type="text" id="flights_0_to_15_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+
+	   <div class="input-container">
+                <label for="flights_between_16_and_30_minutes_late_percent">16 to 30 Mins Late</label>
+                <input type="text" id="nflights_between_16_and_30_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_between_31_and_60_minutes_late_percent">31 to 60 minutes late</label>
+                <input type="text" id="flights_between_31_and_60_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+
+	    <div class="input-container">
+                <label for="flights_between_61_and_120_minutes_late_percent">61 to 120 minutes late</label>
+                <input type="text" id="flights_between_61_and_120_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_between_121_and_180_minutes_late_percent">121 to 180 minutes late</label>
+                <input type="text" id="flights_between_121_and_180_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_between_181_and_360_minutes_late_percent">181 to 360 minutes late</label>
+                <input type="text" id="flights_between_181_and_360_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="flights_more_than_360_minutes_late_percent">More than 360 minutes late</label>
+                <input type="text" id="flights_more_than_360_minutes_late_percent" name="fertilizer" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="arrival_departure_A">Arrival (if yes: 1/ No: 0)</label>
+                <input type="text" id="arrival_departure_A" name="land-area" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="arrival_departure_D">Departure (if yes: 1/ No: 0)</label>
+                <input type="text" id="arrival_departure_D" name="land-area" required>
+            </div>
+
+	    <div class="input-container">
+                <label for="scheduled_charter_C">Chater (if yes: 1/ No: 0)</label>
+                <input type="text" id="scheduled_charter_C" name="land-area" required>
+            </div>
+
+            <div class="input-container">
+                <label for="scheduled_charter_S">Schedule</label>
+                <input type="text" id="scheduled_charter_S" name="land-area" required>
+            </div>
+
+            <button type="submit">Predict Delay Minutes</button>
+        </form>
+
+        <div id="result">
+            {{ prediction_text }}
+        </div>
+    </div>
+
+    <script>
+
+        function validateInput(inputElement) {
+            const inputValue = inputElement.value;
+
+            const validInput = /^-?\d*(\.\d*)?$/.test(inputValue);
+
+            if (!validInput) {
+                inputElement.value = '';
+            }
+        }
+
+
+        const inputElements = document.querySelectorAll('input[type="text"]');
+        inputElements.forEach(function (inputElement) {
+            inputElement.addEventListener('input', function () {
+                validateInput(inputElement);
+            });
+        });
+
+        document.getElementById('prediction-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const temperatureInput = document.getElementById('temperature').value;
+            const rainfallInput = document.getElementById('rainfall').value;
+            const fertilizerInput = document.getElementById('fertilizer').value;
+            const landAreaInput = document.getElementById('land-area').value;
+
+            const temperature = parseFloat(temperatureInput);
+            const rainfall = parseFloat(rainfallInput);
+            const fertilizer = parseFloat(fertilizerInput);
+            const landArea = parseFloat(landAreaInput);
+
+            if (!isNaN(temperature) && !isNaN(rainfall) && !isNaN(fertilizer) && !isNaN(landArea)) {
+                const predictedHarvest = 1000 + (2 * temperature) + (1.5 * rainfall) + (0.5 * fertilizer) - (0.2 * landArea);
+
+                document.getElementById('result').innerHTML = `Predicted Harvest: ${predictedHarvest.toFixed(2)} kg`;
+            } else {
+                document.getElementById('result').innerHTML = 'Please enter valid numeric values.';
+            }
+        });
+    </script>
+</body>
+</html>
